@@ -72,27 +72,31 @@
                 }
             },
             methods: {
-                SetMessage: function (event) {
+                SetMessage(event) {
                     this.message = event.target.value;
                     html = '<table border="2" style = "border-collapse: collapse; width: 100%">';
                     html += '<tr>';
                     html += '<td>Название</td>';
-                    html += '<td>URL статьи</td>';
-                    html += '<td>URL изображения</td>';
+                    html += '<td>Изображение</td>';
+                    //html += '<td>URL изображения</td>';
                     html += '</tr>';
 
                     for (let i = 0; i < this.List.length; i++) {
-                        //if ((this.List[i].name.indexOf(this.Message, 0) >= 0) || this.Message=="") {
+                        if (this.List[i].name.toLowerCase().includes(this.message.toLowerCase()) || this.message.length == 0) {
                             html += '<tr>';
-                            html += '<td>' + this.List[i].name + '</td>';
-                            html += '<td>' + this.List[i].path + '</td>';
-                            html += '<td>' + this.List[i].imgPath + '</td>';
+                            html += '<td><a href=' + this.List[i].path + '>'+this.List[i].name+'</a></td>';
+                            html += '<td><a href=' + this.List[i].path + '><Img src="'+this.List[i].imgPath+'" Width="200" Height="150"></a></td>';
+                            //html += '<td><Img src="'+this.List[i].imgPath+'" Width="200" Height="150"></td>';
+
+                            //html += '<td>' + this.List[i].imgPath + '</td>';
                             html += '</tr>';
-                        //}
+                        }
                     }
 
                     document.getElementById('container').innerHTML = html + '</table>';
-
+                },
+                created: function(){
+                    this.SetMessage();
                 }
             }
         }).mount("#SearchInMass");

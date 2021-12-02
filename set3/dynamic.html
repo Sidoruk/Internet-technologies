@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <title>Практическая работа №3</title>
+    <script src="https://unpkg.com/vue@next/dist/vue.global.prod.js"></script>
+</head>
+
+<body>
+    <h1>VueJS</h1>
+    <h2>Задание 1:</h2>
+    <p>По щелчку кнопки открыть скрытый текст:</p>
+    <div id="app">
+        <p>Описание: {{Message}}</p>
+        <button v-on:click="ShowOrHide">Показать/скрыть</button>
+    </div>
+    <script>
+        Vue.createApp({
+            data() {
+                return { Message: 'Краткое описание.', isShowed: false }
+            },
+            methods: {
+                ShowOrHide: function () {
+                    if (this.isShowed) {
+                        this.Message = 'Краткое описание становится полным после нажатия на кнопку.'
+
+                        this.isShowed = false
+                    } else {
+                        this.Message = 'Краткое описание.'
+
+                        this.isShowed = true
+                    }
+                }
+            }
+        }).mount("#app");
+    </script>
+
+    <h2>Задание 2:</h2>
+    <p>Реализовать меню навигации:</p>
+
+
+    <h2>Задание 3:</h2>
+    <p>Поиск по массиву статей:</p>
+    <div id="SearchInMass">
+        <input type="text" v-on:input="SetMessage" />
+        <p>{{message}}</p>
+        <div id="container"></div>
+    </div>
+    <script>
+        Vue.createApp({
+            data: function () {
+                return {
+                    message: "",
+                    List: [
+                        {
+                            name: "Битва под Аустерлицем",
+                            path: "https://ru.wikipedia.org/wiki/Битва_под_Аустерлицем",
+                            imgPath: "https://ru.wikipedia.org/wiki/Битва_под_Аустерлицем#/media/Файл:La_bataille_d'Austerlitz._2_decembre_1805_(François_Gérard).jpg"
+                        },
+                        {
+                            name: "Антреприза",
+                            path: "https://antreomsk.ru/news/chto-takoe-antrepriza",
+                            imgPath: "https://antreomsk.ru/uploads/images/content/chto-znachit-slovo-antrepriza.jpg"
+                        },
+                        {
+                            name: "Виноград",
+                            path: "https://foodandhealth.ru/yagody/vinograd/",
+                            imgPath: "https://foodandhealth.ru/wp-content/uploads/2016/09/vinograd-300x300.jpg"
+                        }
+                    ]
+                }
+            },
+            methods: {
+                SetMessage: function (event) {
+                    this.message = event.target.value;
+                    html = '<table border="2" style = "border-collapse: collapse; width: 100%">';
+                    html += '<tr>';
+                    html += '<td>Название</td>';
+                    html += '<td>URL статьи</td>';
+                    html += '<td>URL изображения</td>';
+                    html += '</tr>';
+
+                    for (let i = 0; i < this.List.length; i++) {
+                        //if ((this.List[i].name.indexOf(this.Message, 0) >= 0) || this.Message=="") {
+                            html += '<tr>';
+                            html += '<td>' + this.List[i].name + '</td>';
+                            html += '<td>' + this.List[i].path + '</td>';
+                            html += '<td>' + this.List[i].imgPath + '</td>';
+                            html += '</tr>';
+                        //}
+                    }
+
+                    document.getElementById('container').innerHTML = html + '</table>';
+
+                }
+            }
+        }).mount("#SearchInMass");
+    </script>
+</body>
+
+</html>
